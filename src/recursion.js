@@ -65,7 +65,23 @@ var sumBelow = function(n) {
 
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
-var range = function(x, y) {
+var range = function(x, y, nums=[]) {
+  //base
+  if (x === y){
+    return nums;
+  }
+  if (nums.length - 1 === x - y || nums.length - 1 === y - x){
+    return nums;
+  }
+  //recursion
+  if (x < y){
+    nums.push(x + 1);
+    return nums.concat(range(x + 1, y));
+  }
+  if (x > y){
+    nums.push(x - 1);
+    return nums.concat(range(x - 1, y));
+  }
 };
 
 // 7. Compute the exponent of a number.
@@ -74,6 +90,20 @@ var range = function(x, y) {
 // Example:  exponent(4,3);  // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+  //base
+  if (exp === 1){
+    return base;
+  }
+  if (exp === 0){
+    return 1;
+  }
+  //recursion
+  if (exp > 1){
+    return base * exponent(base, exp - 1);
+  }
+  if (exp < 0){
+    return 1 / base * exponent(base, exp + 1).toFixed(4);
+  }
 };
 
 // 8. Determine if a number is a power of two.
@@ -81,14 +111,44 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+  //base
+  if (n === 1){
+    return true;
+  }
+  if (n % 2 !== 0 || n === 0) {
+    return false;
+  }
+  //recursion
+  n = n / 2;
+  return powerOfTwo(n);
 };
 
 // 9. Write a function that accepts a string a reverses it.
-var reverse = function(string) {
+var reverse = function(string, output=[]) {
+  //base
+ if (string.length === 0){
+  return output.join('');
+ }
+  //recursion
+  output.unshift(string[0]);
+  return reverse(string.slice(1), output);
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+  string = string.toLowerCase();
+  string = string.replace(' ', '');
+  //base
+  if (string.length === 0){
+    return true;
+  }
+  
+  //recursion
+  if (string[0] === string[string.length - 1]){
+    return palindrome(string.slice(1, -1));
+  } else {
+    return false;
+  }
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
